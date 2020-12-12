@@ -6,9 +6,9 @@ import 'package:http/http.dart';
 
 import '../../models/place.dart';
 import '../../services/google_maps_service.dart';
-import '../components/logo.dart';
-import '../components/prediction.dart';
-import '../components/search_field.dart';
+import '../components/logo_widget.dart';
+import '../components/predictions_widget.dart';
+import '../components/search_field_widget.dart';
 
 class PageFullScreen extends StatefulWidget {
   final String apiKey;
@@ -20,12 +20,8 @@ class PageFullScreen extends StatefulWidget {
   final bool autoFocus;
 
   final bool showLogo;
-  final Widget logo;
-  final double logoHeight;
-  final double logoWidth;
-  final EdgeInsetsGeometry logoMargin;
-
-  final Widget closeButton;
+  final Widget logoWidget;
+  final Widget closeWidget;
 
   const PageFullScreen({
     Key key,
@@ -35,11 +31,8 @@ class PageFullScreen extends StatefulWidget {
     this.inputDecoration,
     this.autoFocus = true,
     this.showLogo = true,
-    this.logo,
-    this.logoHeight,
-    this.logoWidth,
-    this.logoMargin,
-    this.closeButton,
+    this.logoWidget,
+    this.closeWidget,
   }) : super(key: key);
 
   @override
@@ -106,70 +99,56 @@ class _PageFullScreenState extends State<PageFullScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: SearchFieldWidget(
-          onChanged: _search,
-          inputDecoration: widget.inputDecoration,
-          autoFocus: widget.autoFocus,
-        ),
-        leading: widget.closeButton,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          StreamBuilder<List<Prediction>>(
-            stream: _streamController.stream,
-            builder: (_, snapshot) {
-              if (snapshot.hasData && !snapshot.hasError)
-                return _buildItems(snapshot.data);
-              return SliverToBoxAdapter();
-            },
+        appBar: AppBar(
+          title: SearchFieldWidget(
+            onChanged: _search,
+            inputDecoration: widget.inputDecoration,
+            autoFocus: widget.autoFocus,
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                children: [
-                  Container(
-                    height: 15,
-                    width: 15,
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Visibility(
-                      visible: _isLoading || _isLoadingDetails,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
+          leading: widget.closeWidget != null
+              ? InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: widget.closeWidget,
+                )
+              : null,
+        ),
+        body: CustomScrollView(
+          slivers: [
+            StreamBuilder<List<Prediction>>(
+              stream: _streamController.stream,
+              builder: (_, snapshot) {
+                if (snapshot.hasData && !snapshot.hasError)
+                  return predictionsWidget(
+                    predictions: snapshot.data,
+                    onPressedChoosePrediction: _getPlaceDetails,
+                  );
+                return SliverToBoxAdapter();
+              },
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 15,
+                      width: 15,
+                      margin: const EdgeInsets.symmetric(horizontal: 29),
+                      child: Visibility(
+                        visible: _isLoading || _isLoadingDetails,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
                       ),
                     ),
-                  ),
-                  if (widget.showLogo)
-                    LogoWidget(
-                      height: widget.logoHeight,
-                      width: widget.logoWidth,
-                      child: widget.logo,
-                    ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ));
-
-  Widget _buildItems(List<Prediction> predictions) => SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (_, index) => Padding(
-            padding: const EdgeInsetsDirectional.only(start: 70),
-            child: Column(
-              children: [
-                if (index > 0) const Divider(),
-                PredictionWidget(
-                  prediction: predictions[index],
-                  onPressed: () {
-                    _getPlaceDetails(predictions[index]);
-                  },
+                    if (widget.showLogo) widget.logoWidget ?? LogoWidget(),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          childCount: predictions.length,
+              ),
+            )
+          ],
         ),
       );
 

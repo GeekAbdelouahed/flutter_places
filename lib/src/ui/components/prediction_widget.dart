@@ -9,6 +9,7 @@ class PredictionWidget extends StatelessWidget {
   const PredictionWidget(
       {Key key, this.prediction, this.onPressed, this.padding})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) => ListTile(
         onTap: onPressed,

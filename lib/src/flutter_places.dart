@@ -17,40 +17,78 @@ class FlutterPlaces {
     InputDecoration inputDecoration,
     bool autoFocus = true,
     bool showLogo = true,
-    Widget logo,
-    double logoHeight,
-    double logoWidth,
-    EdgeInsetsGeometry logoMargin,
-    Widget closeButton,
+    Widget logoWidget,
+    Widget closeWidget,
   }) {
-    final builder = (context) {
-      switch (modeType) {
-        case ModeType.OVERLAY:
-          return PageOverlay();
-        case ModeType.BOTTOM_SHEET:
-          return PageBottomSheet();
-        default:
-          return PageFullScreen(
+    switch (modeType) {
+      case ModeType.OVERLAY:
+        /*return Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => PageOverlay(
+              apiKey: apiKey,
+              baseUrl: baseUrl,
+              httpClient: httpClient,
+              inputDecoration: inputDecoration,
+              autoFocus: autoFocus,
+              showLogo: showLogo,
+              logoWidget: logoWidget,
+              closeWidget: closeWidget,
+            ),
+          ),
+        );*/
+        return showDialog(
+          context: context,
+
+          builder: (_) => Material(
+            color: Colors.transparent,
+            child: PageOverlay(
+              apiKey: apiKey,
+              baseUrl: baseUrl,
+              httpClient: httpClient,
+              inputDecoration: inputDecoration,
+              autoFocus: autoFocus,
+              showLogo: showLogo,
+              logoWidget: logoWidget,
+              closeWidget: closeWidget,
+            ),
+          ),
+        );
+
+      case ModeType.BOTTOM_SHEET:
+        return showModalBottomSheet<Place>(
+          context: context,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          builder: (_) => PageBottomSheet(
             apiKey: apiKey,
             baseUrl: baseUrl,
             httpClient: httpClient,
             inputDecoration: inputDecoration,
             autoFocus: autoFocus,
             showLogo: showLogo,
-            logo: logo,
-            logoHeight: logoHeight,
-            logoWidth: logoWidth,
-            logoMargin: logoMargin,
-            closeButton: closeButton,
-          );
-      }
-    };
+            logoWidget: logoWidget,
+            closeWidget: closeWidget,
+          ),
+        );
 
-    return Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: builder,
-      ),
-    );
+      default:
+        return Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PageFullScreen(
+              apiKey: apiKey,
+              baseUrl: baseUrl,
+              httpClient: httpClient,
+              inputDecoration: inputDecoration,
+              autoFocus: autoFocus,
+              showLogo: showLogo,
+              logoWidget: logoWidget,
+              closeWidget: closeWidget,
+            ),
+          ),
+        );
+    }
   }
 }

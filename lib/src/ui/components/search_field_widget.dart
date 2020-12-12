@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'clear_button.dart';
+import 'clear_button_widget.dart';
 
 class SearchFieldWidget extends StatefulWidget {
   final Function(String) onChanged;
   final TextStyle textStyle;
   final InputDecoration inputDecoration;
   final bool autoFocus;
-  final Duration textChnageDuration;
+  final Duration textChangeDuration;
   final Widget clearButton;
   final bool showClearButton;
   final int minSearchCharacters;
@@ -20,7 +20,7 @@ class SearchFieldWidget extends StatefulWidget {
     this.inputDecoration,
     this.textStyle,
     this.autoFocus = true,
-    this.textChnageDuration = const Duration(milliseconds: 500),
+    this.textChangeDuration = const Duration(milliseconds: 500),
     this.clearButton,
     this.showClearButton = true,
     this.minSearchCharacters = 2,
@@ -41,7 +41,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
       _timer?.cancel();
       _timer = null;
     }
-    _timer = Timer(widget.textChnageDuration, () {
+    _timer = Timer(widget.textChangeDuration, () {
       widget.onChanged?.call(_textEditingController.text);
     });
   }

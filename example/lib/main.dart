@@ -3,12 +3,12 @@ import 'package:flutter_places/flutter_places.dart';
 
 import 'environment.dart';
 
-String API_KEY;
+String apiKey;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  API_KEY = await Environment.loadKeys();
+  apiKey = await Environment.loadKeys();
 
   runApp(MyApp());
 }
@@ -55,8 +55,9 @@ class _HomeState extends State<Home> {
                 onPressed: () async {
                   final place = await FlutterPlaces.show(
                     context: context,
-                    apiKey: API_KEY,
+                    apiKey: apiKey,
                   );
+
                   setState(() {
                     _selectedPlace = place;
                   });
@@ -67,13 +68,16 @@ class _HomeState extends State<Home> {
                 height: 20,
               ),
               RaisedButton(
-                onPressed: () {
-                  FlutterPlaces.show(
+                onPressed: () async {
+                  final place = await FlutterPlaces.show(
                     context: context,
-                    apiKey: API_KEY,
+                    apiKey: apiKey,
                     modeType: ModeType.OVERLAY,
-                    closeButton: Text('close'),
                   );
+
+                  setState(() {
+                    _selectedPlace = place;
+                  });
                 },
                 child: Text('Overlay'),
               ),
@@ -81,12 +85,16 @@ class _HomeState extends State<Home> {
                 height: 20,
               ),
               RaisedButton(
-                onPressed: () {
-                  FlutterPlaces.show(
+                onPressed: () async {
+                  final place = await FlutterPlaces.show(
                     context: context,
-                    apiKey: API_KEY,
+                    apiKey: apiKey,
                     modeType: ModeType.BOTTOM_SHEET,
                   );
+
+                  setState(() {
+                    _selectedPlace = place;
+                  });
                 },
                 child: Text('Bottomsheet'),
               ),
