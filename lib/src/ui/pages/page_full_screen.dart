@@ -2,36 +2,44 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:http/http.dart';
 
 import '../../models/place.dart';
-import '../components/search_field.dart';
-import '../components/prediction.dart';
-import '../components/logo.dart';
 import '../../services/google_maps_service.dart';
+import '../components/logo.dart';
+import '../components/prediction.dart';
+import '../components/search_field.dart';
 
 class PageFullScreen extends StatefulWidget {
   final String apiKey;
   final String baseUrl;
-  final httpClient;
+  final Client httpClient;
 
   final InputDecoration inputDecoration;
+
   final bool autoFocus;
+
+  final bool showLogo;
   final Widget logo;
   final double logoHeight;
   final double logoWidth;
   final EdgeInsetsGeometry logoMargin;
 
+  final Widget closeButton;
+
   const PageFullScreen({
     Key key,
     @required this.apiKey,
-    this.baseUrl,
+    @required this.baseUrl,
     this.httpClient,
     this.inputDecoration,
     this.autoFocus = true,
+    this.showLogo = true,
     this.logo,
     this.logoHeight,
     this.logoWidth,
     this.logoMargin,
+    this.closeButton,
   }) : super(key: key);
 
   @override
@@ -39,7 +47,7 @@ class PageFullScreen extends StatefulWidget {
 }
 
 class _PageFullScreenState extends State<PageFullScreen> {
-  GoogleMapSerivce _googleMapSerivce;
+  GoogleMapService _googleMapService;
 
   StreamController<List<Prediction>> _streamController =
       StreamController.broadcast();
@@ -48,16 +56,16 @@ class _PageFullScreenState extends State<PageFullScreen> {
   bool _isLoadingDetails = false;
 
   void _getPlaceDetails(Prediction prediction) {
-    _googleMapSerivce.getPlaceDetails(
+    _googleMapService.getPlaceDetails(
       prediction.placeId,
       onLoading: (isLoading) {
         setState(() {
           _isLoadingDetails = isLoading;
         });
       },
-      onSuccess: (placeDtails) {
+      onSuccess: (placeDetails) {
         final Place place =
-            Place(prediction: prediction, placeDetails: placeDtails);
+            Place(prediction: prediction, placeDetails: placeDetails);
         Navigator.of(context).pop(place);
       },
       onError: (error) {
@@ -69,7 +77,7 @@ class _PageFullScreenState extends State<PageFullScreen> {
   void _search(String query) {
     if (_isLoadingDetails) return;
 
-    _googleMapSerivce.search(
+    _googleMapService.search(
       query,
       onLoading: (isLoading) {
         setState(() {
@@ -89,7 +97,7 @@ class _PageFullScreenState extends State<PageFullScreen> {
   void initState() {
     super.initState();
 
-    _googleMapSerivce = GoogleMapSerivce(
+    _googleMapService = GoogleMapService(
       apiKey: widget.apiKey,
       baseUrl: widget.baseUrl,
       httpClient: widget.httpClient,
@@ -104,6 +112,7 @@ class _PageFullScreenState extends State<PageFullScreen> {
           inputDecoration: widget.inputDecoration,
           autoFocus: widget.autoFocus,
         ),
+        leading: widget.closeButton,
       ),
       body: CustomScrollView(
         slivers: [
@@ -131,11 +140,12 @@ class _PageFullScreenState extends State<PageFullScreen> {
                       ),
                     ),
                   ),
-                  LogoWidget(
-                    height: widget.logoHeight,
-                    width: widget.logoWidth,
-                    child: widget.logo,
-                  ),
+                  if (widget.showLogo)
+                    LogoWidget(
+                      height: widget.logoHeight,
+                      width: widget.logoWidth,
+                      child: widget.logo,
+                    ),
                 ],
               ),
             ),
@@ -165,7 +175,7 @@ class _PageFullScreenState extends State<PageFullScreen> {
 
   @override
   void dispose() {
-    _googleMapSerivce.dispose();
+    _googleMapService.dispose();
     _streamController.close();
     super.dispose();
   }

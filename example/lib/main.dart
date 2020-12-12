@@ -27,7 +27,14 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  Place _selectedPlace;
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -38,14 +45,21 @@ class Home extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                _selectedPlace?.prediction?.description ?? 'Place name',
+              ),
+              const SizedBox(
+                height: 50,
+              ),
               RaisedButton(
                 onPressed: () async {
                   final place = await FlutterPlaces.show(
                     context: context,
                     apiKey: API_KEY,
                   );
-                  print(
-                      'palce name: ${place?.placeDetails?.geometry?.location?.lat}');
+                  setState(() {
+                    _selectedPlace = place;
+                  });
                 },
                 child: Text('Fullscreen'),
               ),
@@ -58,6 +72,7 @@ class Home extends StatelessWidget {
                     context: context,
                     apiKey: API_KEY,
                     modeType: ModeType.OVERLAY,
+                    closeButton: Text('close'),
                   );
                 },
                 child: Text('Overlay'),

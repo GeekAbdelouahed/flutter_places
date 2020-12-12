@@ -1,15 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
-class GoogleMapSerivce {
+class GoogleMapService {
   final String apiKey;
   final String baseUrl;
-  final httpClient;
+  final Client httpClient;
 
   GoogleMapsPlaces _places;
 
-  GoogleMapSerivce({
+  GoogleMapService({
     @required this.apiKey,
     this.baseUrl,
     this.httpClient,
