@@ -9,21 +9,26 @@ SliverList predictionsWidget({
 }) =>
     SliverList(
       delegate: SliverChildBuilderDelegate(
-        (_, index) => Container(
-          color: Colors.white,
-          padding: const EdgeInsetsDirectional.only(start: 72.7),
-          child: Column(
-            children: [
-              if (index > 0) const Divider(),
-              PredictionWidget(
-                prediction: predictions[index],
-                onPressed: () {
-                  onPressedChoosePrediction?.call(
-                    predictions[index],
-                  );
-                },
-              ),
-            ],
+        (_, index) => GestureDetector(
+          onTap: () {
+            // To avoid close dialog when click on the result section
+          },
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsetsDirectional.only(start: 72.7),
+            child: Column(
+              children: [
+                if (index > 0) const Divider(),
+                PredictionWidget(
+                  prediction: predictions[index],
+                  onPressed: () {
+                    onPressedChoosePrediction?.call(
+                      predictions[index],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         childCount: predictions.length,

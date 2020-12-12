@@ -100,85 +100,95 @@ class _PageOverlayState extends State<PageOverlay> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(20),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: AppBar(
-                elevation: 0,
-                iconTheme: const IconThemeData(
-                  color: Colors.black87,
-                ),
-                backgroundColor: Colors.white,
-                title: SearchFieldWidget(
-                  onChanged: _search,
-                  textStyle: widget.textStyle ??
-                      const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                  inputDecoration: widget.inputDecoration ??
-                      InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(.5),
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: AppBar(
+                  elevation: 0,
+                  iconTheme: const IconThemeData(
+                    color: Colors.black87,
+                  ),
+                  backgroundColor: Colors.white,
+                  title: SearchFieldWidget(
+                    onChanged: _search,
+                    textStyle: widget.textStyle ??
+                        const TextStyle(
+                          color: Colors.black,
                           fontSize: 18,
                         ),
-                        border: InputBorder.none,
-                      ),
-                  autoFocus: widget.autoFocus,
-                  clearButton: const Icon(Icons.close),
-                ),
-                leading: widget.closeWidget != null
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: widget.closeWidget,
-                      )
-                    : null,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: const Divider(
-                height: .5,
-              ),
-            ),
-            StreamBuilder<List<Prediction>>(
-              stream: _streamController.stream,
-              builder: (_, snapshot) {
-                if (snapshot.hasData && !snapshot.hasError)
-                  return predictionsWidget(
-                    predictions: snapshot.data,
-                    onPressedChoosePrediction: _getPlaceDetails,
-                  );
-                return SliverToBoxAdapter();
-              },
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 15,
-                      width: 15,
-                      margin: const EdgeInsets.symmetric(horizontal: 29),
-                      child: Visibility(
-                        visible: _isLoading || _isLoadingDetails,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
+                    inputDecoration: widget.inputDecoration ??
+                        InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(
+                            color: Colors.black.withOpacity(.5),
+                            fontSize: 18,
+                          ),
+                          border: InputBorder.none,
                         ),
-                      ),
-                    ),
-                    if (widget.showLogo) widget.logoWidget ?? LogoWidget(),
-                  ],
+                    autoFocus: widget.autoFocus,
+                    clearButton: const Icon(Icons.close),
+                  ),
+                  leading: widget.closeWidget != null
+                      ? InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: widget.closeWidget,
+                        )
+                      : null,
                 ),
               ),
-            ),
-          ],
+              SliverToBoxAdapter(
+                child: const Divider(
+                  height: .5,
+                ),
+              ),
+              StreamBuilder<List<Prediction>>(
+                stream: _streamController.stream,
+                builder: (_, snapshot) {
+                  if (snapshot.hasData && !snapshot.hasError)
+                    return predictionsWidget(
+                      predictions: snapshot.data,
+                      onPressedChoosePrediction: _getPlaceDetails,
+                    );
+                  return SliverToBoxAdapter();
+                },
+              ),
+              SliverToBoxAdapter(
+                child: GestureDetector(
+                  onTap: () {
+                    // To avoid close dialog when click on the logo section
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 15,
+                          margin: const EdgeInsets.symmetric(horizontal: 29),
+                          child: Visibility(
+                            visible: _isLoading || _isLoadingDetails,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        ),
+                        if (widget.showLogo) widget.logoWidget ?? LogoWidget(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
