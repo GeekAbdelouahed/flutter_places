@@ -24,6 +24,8 @@ class PageOverlay extends StatefulWidget {
   final Widget logoWidget;
   final Widget closeWidget;
 
+  final double radius;
+
   const PageOverlay({
     Key key,
     @required this.apiKey,
@@ -35,6 +37,7 @@ class PageOverlay extends StatefulWidget {
     this.showLogo = true,
     this.logoWidget,
     this.closeWidget,
+    this.radius = 5,
   }) : super(key: key);
 
   @override
@@ -111,6 +114,11 @@ class _PageOverlayState extends State<PageOverlay> {
               SliverToBoxAdapter(
                 child: AppBar(
                   elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(widget.radius),
+                    ),
+                  ),
                   iconTheme: const IconThemeData(
                     color: Colors.black87,
                   ),
@@ -166,8 +174,13 @@ class _PageOverlayState extends State<PageOverlay> {
                     // To avoid close dialog when click on the logo section
                   },
                   child: Container(
-                    color: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(widget.radius),
+                      ),
+                    ),
                     child: Row(
                       children: [
                         Container(

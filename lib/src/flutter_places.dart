@@ -19,27 +19,12 @@ class FlutterPlaces {
     bool showLogo = true,
     Widget logoWidget,
     Widget closeWidget,
+    double radius = 5,
   }) {
     switch (modeType) {
       case ModeType.OVERLAY:
-        /*return Navigator.push(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => PageOverlay(
-              apiKey: apiKey,
-              baseUrl: baseUrl,
-              httpClient: httpClient,
-              inputDecoration: inputDecoration,
-              autoFocus: autoFocus,
-              showLogo: showLogo,
-              logoWidget: logoWidget,
-              closeWidget: closeWidget,
-            ),
-          ),
-        );*/
         return showDialog(
           context: context,
-
           builder: (_) => Material(
             color: Colors.transparent,
             child: PageOverlay(
@@ -51,6 +36,7 @@ class FlutterPlaces {
               showLogo: showLogo,
               logoWidget: logoWidget,
               closeWidget: closeWidget,
+              radius: radius,
             ),
           ),
         );
@@ -59,7 +45,9 @@ class FlutterPlaces {
         return showModalBottomSheet<Place>(
           context: context,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(radius),
+            ),
           ),
           builder: (_) => PageBottomSheet(
             apiKey: apiKey,
