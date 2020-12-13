@@ -8,7 +8,7 @@ String apiKey;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  apiKey = await Environment.loadKeys();
+  apiKey = await Environment.getKey();
 
   runApp(MyApp());
 }

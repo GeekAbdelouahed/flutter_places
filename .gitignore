@@ -2,6 +2,7 @@ example/.keys
 example/android/
 example/ios/
 example/web/
+example/lib/environment.dart
 
 # Miscellaneous
 *.class

@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
 
 class Environment {
-  static Future<String> loadKeys() => rootBundle.loadString('.keys');
+  static Future<String> getKey() => rootBundle.loadString('.keys');
 }

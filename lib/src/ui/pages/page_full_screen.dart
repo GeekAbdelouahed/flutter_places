@@ -15,24 +15,38 @@ class PageFullScreen extends StatefulWidget {
   final String baseUrl;
   final Client httpClient;
 
+  final TextStyle textStyle;
   final InputDecoration inputDecoration;
-
+  final Duration textChangeDuration;
+  final Widget clearButton;
+  final bool showClearButton;
+  final int minSearchCharacters;
   final bool autoFocus;
 
   final bool showLogo;
   final Widget logoWidget;
   final Widget closeWidget;
 
+  final Widget itemLeading;
+  final Widget itemTrailing;
+
   const PageFullScreen({
     Key key,
     @required this.apiKey,
     @required this.baseUrl,
     this.httpClient,
+    this.textStyle,
     this.inputDecoration,
+    this.textChangeDuration,
+    this.clearButton,
+    this.showClearButton,
+    this.minSearchCharacters,
     this.autoFocus = true,
     this.showLogo = true,
     this.logoWidget,
     this.closeWidget,
+    this.itemLeading,
+    this.itemTrailing,
   }) : super(key: key);
 
   @override
@@ -123,6 +137,8 @@ class _PageFullScreenState extends State<PageFullScreen> {
                   return predictionsWidget(
                     predictions: snapshot.data,
                     onPressedChoosePrediction: _getPlaceDetails,
+                    itemLeading: widget.itemLeading,
+                    itemTrailing: widget.itemTrailing,
                   );
                 return SliverToBoxAdapter();
               },

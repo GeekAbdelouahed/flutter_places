@@ -18,12 +18,18 @@ class PageBottomSheet extends StatefulWidget {
 
   final TextStyle textStyle;
   final InputDecoration inputDecoration;
-
+  final Duration textChangeDuration;
+  final Widget clearButton;
+  final bool showClearButton;
+  final int minSearchCharacters;
   final bool autoFocus;
 
   final bool showLogo;
   final Widget logoWidget;
   final Widget closeWidget;
+
+  final Widget itemLeading;
+  final Widget itemTrailing;
 
   const PageBottomSheet({
     Key key,
@@ -32,10 +38,16 @@ class PageBottomSheet extends StatefulWidget {
     this.httpClient,
     this.textStyle,
     this.inputDecoration,
+    this.textChangeDuration,
+    this.clearButton,
+    this.showClearButton,
+    this.minSearchCharacters,
     this.autoFocus = true,
     this.showLogo = true,
     this.logoWidget,
     this.closeWidget,
+    this.itemLeading,
+    this.itemTrailing,
   }) : super(key: key);
 
   @override
@@ -149,6 +161,8 @@ class _PageBottomSheetState extends State<PageBottomSheet> {
                 return predictionsWidget(
                   predictions: snapshot.data,
                   onPressedChoosePrediction: _getPlaceDetails,
+                  itemLeading: widget.itemLeading,
+                  itemTrailing: widget.itemTrailing,
                 );
               return SliverToBoxAdapter();
             },

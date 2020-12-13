@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 
-import 'prediction_widget.dart';
+import 'prediction_item_widget.dart';
 
 SliverList predictionsWidget({
   List<Prediction> predictions,
   Function(Prediction) onPressedChoosePrediction,
+  Widget itemLeading,
+  Widget itemTrailing,
 }) =>
     SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -19,8 +21,10 @@ SliverList predictionsWidget({
             child: Column(
               children: [
                 if (index > 0) const Divider(),
-                PredictionWidget(
+                PredictionItemWidget(
                   prediction: predictions[index],
+                  leading: itemLeading,
+                  trailing: itemTrailing,
                   onPressed: () {
                     onPressedChoosePrediction?.call(
                       predictions[index],
