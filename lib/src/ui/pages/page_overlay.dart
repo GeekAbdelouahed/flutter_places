@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 
 import '../../models/place.dart';
 import '../../services/google_maps_service.dart';
+import '../../utils/extensions.dart';
 import '../components/logo_widget.dart';
 import '../components/predictions_widget.dart';
 import '../components/search_field_widget.dart';
@@ -30,6 +31,7 @@ class PageOverlay extends StatefulWidget {
   final Widget itemLeading;
   final Widget itemTrailing;
 
+  final EdgeInsetsGeometry overlayMargin;
   final double radius;
 
   const PageOverlay({
@@ -49,6 +51,7 @@ class PageOverlay extends StatefulWidget {
     this.closeWidget,
     this.itemLeading,
     this.itemTrailing,
+    this.overlayMargin = const EdgeInsets.all(10),
     this.radius = 5,
   }) : super(key: key);
 
@@ -120,53 +123,58 @@ class _PageOverlayState extends State<PageOverlay> {
           Navigator.pop(context);
         },
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: widget.overlayMargin,
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: AppBar(
-                  elevation: 0,
+                child: Material(
+                  clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(widget.radius),
                     ),
                   ),
-                  iconTheme: const IconThemeData(
-                    color: Colors.black87,
-                  ),
-                  backgroundColor: Colors.white,
-                  title: SearchFieldWidget(
-                    onChanged: _search,
-                    textStyle: widget.textStyle ??
-                        const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                    inputDecoration: widget.inputDecoration ??
-                        InputDecoration(
-                          hintText: 'Search',
-                          hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(.5),
+                  child: AppBar(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    iconTheme: Theme.of(context).iconTheme,
+                    title: SearchFieldWidget(
+                      onChanged: _search,
+                      textStyle: widget.textStyle ??
+                          TextStyle(
+                            color: context.isDarkMode
+                                ? Colors.white
+                                : Colors.black,
                             fontSize: 18,
                           ),
-                          border: InputBorder.none,
-                        ),
-                    autoFocus: widget.autoFocus,
-                    clearButton: const Icon(Icons.close),
+                      inputDecoration: widget.inputDecoration ??
+                          InputDecoration(
+                            hintText: 'Search',
+                            hintStyle: TextStyle(
+                              color: context.isDarkMode
+                                  ? Theme.of(context).hintColor
+                                  : Colors.black.withOpacity(.5),
+                              fontSize: 18,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                      autoFocus: widget.autoFocus,
+                      clearButton: const Icon(Icons.close),
+                    ),
+                    leading: widget.closeWidget != null
+                        ? InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: widget.closeWidget,
+                          )
+                        : null,
                   ),
-                  leading: widget.closeWidget != null
-                      ? InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: widget.closeWidget,
-                        )
-                      : null,
                 ),
               ),
               SliverToBoxAdapter(
-                child: const Divider(
-                  height: .5,
+                child: Material(
+                  child: const Divider(),
                 ),
               ),
               StreamBuilder<List<Prediction>>(
@@ -187,29 +195,32 @@ class _PageOverlayState extends State<PageOverlay> {
                   onTap: () {
                     // To avoid close dialog when click on the logo section
                   },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                  child: Material(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         bottom: Radius.circular(widget.radius),
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 15,
-                          width: 15,
-                          margin: const EdgeInsets.symmetric(horizontal: 29),
-                          child: Visibility(
-                            visible: _isLoading || _isLoadingDetails,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 15,
+                            width: 15,
+                            margin: const EdgeInsets.symmetric(horizontal: 29),
+                            child: Visibility(
+                              visible: _isLoading || _isLoadingDetails,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
                             ),
                           ),
-                        ),
-                        if (widget.showLogo) widget.logoWidget ?? LogoWidget(),
-                      ],
+                          if (widget.showLogo)
+                            widget.logoWidget ?? LogoWidget(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

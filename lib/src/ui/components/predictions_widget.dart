@@ -15,23 +15,24 @@ SliverList predictionsWidget({
           onTap: () {
             // To avoid close dialog when click on the result section
           },
-          child: Container(
-            color: Colors.white,
-            padding: const EdgeInsetsDirectional.only(start: 72.7),
-            child: Column(
-              children: [
-                if (index > 0) const Divider(),
-                PredictionItemWidget(
-                  prediction: predictions[index],
-                  leading: itemLeading,
-                  trailing: itemTrailing,
-                  onPressed: () {
-                    onPressedChoosePrediction?.call(
-                      predictions[index],
-                    );
-                  },
-                ),
-              ],
+          child: Material(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(start: 72.7),
+              child: Column(
+                children: [
+                  PredictionItemWidget(
+                    prediction: predictions[index],
+                    leading: itemLeading,
+                    trailing: itemTrailing,
+                    onPressed: () {
+                      onPressedChoosePrediction?.call(
+                        predictions[index],
+                      );
+                    },
+                  ),
+                  const Divider(),
+                ],
+              ),
             ),
           ),
         ),

@@ -19,10 +19,10 @@ class PredictionItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        onTap: onPressed,
         contentPadding: padding ?? const EdgeInsetsDirectional.only(end: 16),
         leading: leading,
         title: Text(prediction.description),
         trailing: trailing,
+        onTap: onPressed,
       );
 }

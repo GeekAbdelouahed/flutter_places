@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 
 import '../../models/place.dart';
 import '../../services/google_maps_service.dart';
+import '../../utils/extensions.dart';
 import '../components/logo_widget.dart';
 import '../components/search_field_widget.dart';
 
@@ -118,22 +119,22 @@ class _PageBottomSheetState extends State<PageBottomSheet> {
           SliverToBoxAdapter(
             child: AppBar(
               elevation: 0,
-              iconTheme: const IconThemeData(
-                color: Colors.black87,
-              ),
+              iconTheme: Theme.of(context).iconTheme,
               backgroundColor: Colors.transparent,
               title: SearchFieldWidget(
                 onChanged: _search,
                 textStyle: widget.textStyle ??
-                    const TextStyle(
-                      color: Colors.black,
+                    TextStyle(
+                      color: context.isDarkMode ? Colors.white : Colors.black,
                       fontSize: 18,
                     ),
                 inputDecoration: widget.inputDecoration ??
                     InputDecoration(
                       hintText: 'Search',
                       hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(.5),
+                        color: context.isDarkMode
+                            ? Theme.of(context).hintColor
+                            : Colors.black.withOpacity(.5),
                         fontSize: 18,
                       ),
                       border: InputBorder.none,
@@ -141,18 +142,12 @@ class _PageBottomSheetState extends State<PageBottomSheet> {
                 autoFocus: widget.autoFocus,
                 clearButton: const Icon(Icons.close),
               ),
-              leading: widget.closeWidget != null
-                  ? InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: widget.closeWidget,
-                    )
-                  : null,
             ),
           ),
           SliverToBoxAdapter(
-            child: const Divider(),
+            child: Material(
+              child: const Divider(),
+            ),
           ),
           StreamBuilder<List<Prediction>>(
             stream: _streamController.stream,

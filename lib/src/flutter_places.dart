@@ -26,6 +26,7 @@ class FlutterPlaces {
     Widget closeWidget,
     Widget itemLeading,
     Widget itemTrailing,
+    EdgeInsetsGeometry overlayMargin = const EdgeInsets.all(10),
     double radius = 5,
   }) {
     switch (modeType) {
@@ -50,6 +51,7 @@ class FlutterPlaces {
               closeWidget: closeWidget,
               itemLeading: itemLeading,
               itemTrailing: itemTrailing,
+              overlayMargin: overlayMargin,
               radius: radius,
             ),
           ),

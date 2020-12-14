@@ -8,8 +8,8 @@ class LogoWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width * .3,
         child: Image.asset(
           context.isDarkMode
-              ? 'packages/flutter_places/assets/google_light.png'
-              : 'packages/flutter_places/assets/google_dark.png',
+              ? 'packages/flutter_places/assets/google_dark.png'
+              : 'packages/flutter_places/assets/google_light.png',
         ),
       );
 }
