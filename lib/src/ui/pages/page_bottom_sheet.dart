@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_places/src/ui/components/predictions_widget.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 
+import '../../models/search_options.dart';
 import '../../models/place.dart';
 import '../../services/google_maps_service.dart';
 import '../../utils/extensions.dart';
 import '../components/logo_widget.dart';
+import '../components/predictions_widget.dart';
 import '../components/search_field_widget.dart';
 
 class PageBottomSheet extends StatefulWidget {
@@ -32,6 +32,8 @@ class PageBottomSheet extends StatefulWidget {
   final Widget itemLeading;
   final Widget itemTrailing;
 
+  final SearchOptions searchOptions;
+
   const PageBottomSheet({
     Key key,
     @required this.apiKey,
@@ -49,6 +51,7 @@ class PageBottomSheet extends StatefulWidget {
     this.closeWidget,
     this.itemLeading,
     this.itemTrailing,
+    this.searchOptions,
   }) : super(key: key);
 
   @override
@@ -88,6 +91,7 @@ class _PageBottomSheetState extends State<PageBottomSheet> {
 
     _googleMapService.search(
       query,
+      searchOptions: widget.searchOptions,
       onLoading: (isLoading) {
         setState(() {
           _isLoading = isLoading;

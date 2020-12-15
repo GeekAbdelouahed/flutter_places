@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import '../flutter_places.dart';
+import 'models/search_options.dart';
 import 'ui/pages/page_bottom_sheet.dart';
 import 'ui/pages/page_full_screen.dart';
 import 'ui/pages/page_overlay.dart';
@@ -28,6 +29,7 @@ class FlutterPlaces {
     Widget itemTrailing,
     EdgeInsetsGeometry overlayMargin = const EdgeInsets.all(10),
     double radius = 5,
+    SearchOptions searchOptions,
   }) {
     switch (modeType) {
       case ModeType.OVERLAY:
@@ -53,6 +55,7 @@ class FlutterPlaces {
               itemTrailing: itemTrailing,
               overlayMargin: overlayMargin,
               radius: radius,
+              searchOptions: searchOptions,
             ),
           ),
         );
@@ -81,6 +84,7 @@ class FlutterPlaces {
             closeWidget: closeWidget,
             itemLeading: itemLeading,
             itemTrailing: itemTrailing,
+            searchOptions: searchOptions,
           ),
         );
 
@@ -104,6 +108,7 @@ class FlutterPlaces {
               closeWidget: closeWidget,
               itemLeading: itemLeading,
               itemTrailing: itemTrailing,
+              searchOptions: searchOptions,
             ),
           ),
         );

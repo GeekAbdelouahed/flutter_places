@@ -5,6 +5,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 
 import '../../models/place.dart';
+import '../../models/search_options.dart';
 import '../../services/google_maps_service.dart';
 import '../components/logo_widget.dart';
 import '../components/predictions_widget.dart';
@@ -30,6 +31,8 @@ class PageFullScreen extends StatefulWidget {
   final Widget itemLeading;
   final Widget itemTrailing;
 
+  final SearchOptions searchOptions;
+
   const PageFullScreen({
     Key key,
     @required this.apiKey,
@@ -47,6 +50,7 @@ class PageFullScreen extends StatefulWidget {
     this.closeWidget,
     this.itemLeading,
     this.itemTrailing,
+    this.searchOptions,
   }) : super(key: key);
 
   @override
@@ -86,6 +90,7 @@ class _PageFullScreenState extends State<PageFullScreen> {
 
     _googleMapService.search(
       query,
+      searchOptions: widget.searchOptions,
       onLoading: (isLoading) {
         setState(() {
           _isLoading = isLoading;

@@ -5,6 +5,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 
 import '../../models/place.dart';
+import '../../models/search_options.dart';
 import '../../services/google_maps_service.dart';
 import '../../utils/extensions.dart';
 import '../components/logo_widget.dart';
@@ -34,6 +35,8 @@ class PageOverlay extends StatefulWidget {
   final EdgeInsetsGeometry overlayMargin;
   final double radius;
 
+  final SearchOptions searchOptions;
+
   const PageOverlay({
     Key key,
     @required this.apiKey,
@@ -53,6 +56,7 @@ class PageOverlay extends StatefulWidget {
     this.itemTrailing,
     this.overlayMargin = const EdgeInsets.all(10),
     this.radius = 5,
+    this.searchOptions,
   }) : super(key: key);
 
   @override
@@ -92,6 +96,7 @@ class _PageOverlayState extends State<PageOverlay> {
 
     _googleMapService.search(
       query,
+      searchOptions: widget.searchOptions,
       onLoading: (isLoading) {
         setState(() {
           _isLoading = isLoading;

@@ -2,22 +2,20 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
-class GoogleMapService {
-  final String apiKey;
-  final String baseUrl;
-  final Client httpClient;
+import '../models/search_options.dart';
 
+class GoogleMapService {
   GoogleMapsPlaces _places;
 
   GoogleMapService({
-    @required this.apiKey,
-    this.baseUrl,
-    this.httpClient,
+    @required apiKey,
+    String baseUrl,
+    Client httpClient,
   }) {
     _places = GoogleMapsPlaces(
-      apiKey: this.apiKey,
-      baseUrl: this.baseUrl,
-      httpClient: this.httpClient,
+      apiKey: apiKey,
+      baseUrl: baseUrl,
+      httpClient: httpClient,
     );
   }
 
@@ -26,10 +24,23 @@ class GoogleMapService {
     Function(bool) onLoading,
     Function(List<Prediction>) onSuccess,
     Function(String) onError,
+    SearchOptions searchOptions,
   }) async {
     onLoading?.call(true);
     try {
-      final res = await _places.autocomplete(query);
+      final res = await _places.autocomplete(
+        query,
+        sessionToken: searchOptions.sessionToken,
+        origin: searchOptions.origin,
+        location: searchOptions.location,
+        offset: searchOptions.offset,
+        radius: searchOptions.radius,
+        language: searchOptions.language,
+        types: searchOptions.types,
+        components: searchOptions.components,
+        strictbounds: searchOptions.strictbounds,
+        region: searchOptions.region,
+      );
 
       if (res.errorMessage?.isNotEmpty ??
           false || res.status == 'REQUEST_DENIED') {
