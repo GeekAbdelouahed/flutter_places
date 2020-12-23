@@ -4,15 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_places/flutter_places.dart';
 
-import 'environment.dart';
-
-String apiKey;
+String apiKey = "API_KEY";
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  apiKey = await Environment.getKey();
-
   runApp(MyApp());
 }
 
