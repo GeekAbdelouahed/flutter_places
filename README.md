@@ -10,13 +10,13 @@ Flutter places fully customizable widget for autocomplete, compatible with Light
   <table>
     <tr>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/fullscreen-light.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/fullscreen-light.png" height="400">
       </td>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/fullscreen-dark.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/fullscreen-dark.png" height="400">
       </td>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/fullscreen-ios.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/fullscreen-ios.png" height="400">
       </td>
   </table>
 </div>
@@ -28,13 +28,13 @@ Flutter places fully customizable widget for autocomplete, compatible with Light
   <table>
     <tr>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/overlay-light.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/overlay-light.png" height="400">
       </td>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/overlay-dark.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/overlay-dark.png" height="400">
       </td>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/overlay-ios.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/overlay-ios.png" height="400">
       </td>
   </table>
 </div>
@@ -45,13 +45,13 @@ Flutter places fully customizable widget for autocomplete, compatible with Light
   <table>
     <tr>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/bottomsheet-light.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/bottomsheet-light.png" height="400">
       </td>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/bottomsheet-dark.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/bottomsheet-dark.png" height="400">
       </td>
       <td style="text-align: center">
-        <img src="https://github.com/GeekAbdelouahed/flutter_places/blob/master/screenshots/bottomsheet-ios.png" height="400">
+        <img src="https://github.com/GeekAbdelouahed/flutter_places/raw/master/screenshots/bottomsheet-ios.png" height="400">
       </td>
   </table>
 </div>
