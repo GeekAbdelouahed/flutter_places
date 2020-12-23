@@ -1,4 +1,6 @@
-# Flutter Places
+## Flutter Places
+
+[![pub package](https://img.shields.io/pub/v/flutter_places.svg)](https://pub.dartlang.org/packages/flutter_places)
 
 Flutter places fully customizable widget for autocomplete, compatible with Light and Dark mode.
 
@@ -57,6 +59,8 @@ Flutter places fully customizable widget for autocomplete, compatible with Light
 
 ## Usage
 
+[Include 'flutter_places' from Dart Pub.](https://pub.dartlang.org/packages/flutter_places)
+
 ```yaml
 # pubspec.yaml
 
@@ -65,6 +69,14 @@ dependencies:
     sdk: flutter
   flutter_places: <last-version>
 ```
+
+Next, import 'flutter_places.dart' into your dart code.
+
+```dart
+import 'package:flutter_places/flutter_places.dart';
+```
+
+Example
 
 ```dart
 
