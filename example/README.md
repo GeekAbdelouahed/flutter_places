@@ -1,16 +1,110 @@
-# flutter_places_example
+# Flutter Places Example
 
-A new Flutter project.
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_places/flutter_places.dart';
 
-## Getting Started
+import 'environment.dart';
 
-This project is a starting point for a Flutter application.
+String apiKey;
 
-A few resources to get you started if this is your first Flutter project:
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+  apiKey = await Environment.getKey();
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Home(),
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  Place _selectedPlace;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter places'),
+        ),
+        body: Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                _selectedPlace?.prediction?.description ?? 'Place name',
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  final place = await FlutterPlaces.show(
+                    context: context,
+                    apiKey: apiKey,
+                  );
+
+                  setState(() {
+                    _selectedPlace = place;
+                  });
+                },
+                child: Text('Fullscreen'),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  final place = await FlutterPlaces.show(
+                    context: context,
+                    apiKey: apiKey,
+                    modeType: ModeType.OVERLAY,
+                  );
+
+                  setState(() {
+                    _selectedPlace = place;
+                  });
+                },
+                child: Text('Overlay'),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  final place = await FlutterPlaces.show(
+                    context: context,
+                    apiKey: apiKey,
+                    modeType: ModeType.BOTTOM_SHEET,
+                  );
+
+                  setState(() {
+                    _selectedPlace = place;
+                  });
+                },
+                child: Text('Bottomsheet'),
+              ),
+            ],
+          ),
+        ),
+      );
+}
+
+```
