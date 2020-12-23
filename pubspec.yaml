@@ -1,8 +1,7 @@
 name: flutter_places
-description: A new Flutter package project.
-version: 0.0.1
-author:
-homepage:
+description: Flutter places fully customizable widget for autocomplete, compatible with Light and Dark mode, based on https://pub.dartlang.org/packages/google_maps_webservice
+version: 1.0.0
+homepage: https://github.com/GeekAbdelouahed/flutter_places
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -12,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_webservice: ^0.0.18
+  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:

@@ -111,7 +111,7 @@ class _PageBottomSheetState extends State<PageBottomSheet> {
     super.initState();
 
     _googleMapService = GoogleMapService(
-      apiKey: widget.apiKey,
+      widget.apiKey,
       baseUrl: widget.baseUrl,
       httpClient: widget.httpClient,
     );

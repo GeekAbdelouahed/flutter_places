@@ -116,7 +116,7 @@ class _PageOverlayState extends State<PageOverlay> {
     super.initState();
 
     _googleMapService = GoogleMapService(
-      apiKey: widget.apiKey,
+      widget.apiKey,
       baseUrl: widget.baseUrl,
       httpClient: widget.httpClient,
     );

@@ -110,7 +110,7 @@ class _PageFullScreenState extends State<PageFullScreen> {
     super.initState();
 
     _googleMapService = GoogleMapService(
-      apiKey: widget.apiKey,
+      widget.apiKey,
       baseUrl: widget.baseUrl,
       httpClient: widget.httpClient,
     );

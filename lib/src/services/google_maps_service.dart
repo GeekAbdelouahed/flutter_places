@@ -1,14 +1,13 @@
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
 import '../models/search_options.dart';
 
 class GoogleMapService {
   GoogleMapsPlaces _places;
 
-  GoogleMapService({
-    @required apiKey,
+  GoogleMapService(
+    apiKey, {
     String baseUrl,
     Client httpClient,
   }) {
