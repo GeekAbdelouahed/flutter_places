@@ -29,16 +29,16 @@ class GoogleMapService {
     try {
       final res = await _places.autocomplete(
         query,
-        sessionToken: searchOptions.sessionToken,
-        origin: searchOptions.origin,
-        location: searchOptions.location,
-        offset: searchOptions.offset,
-        radius: searchOptions.radius,
-        language: searchOptions.language,
-        types: searchOptions.types,
-        components: searchOptions.components,
-        strictbounds: searchOptions.strictbounds,
-        region: searchOptions.region,
+        sessionToken: searchOptions?.sessionToken,
+        origin: searchOptions?.origin,
+        location: searchOptions?.location,
+        offset: searchOptions?.offset,
+        radius: searchOptions?.radius,
+        language: searchOptions?.language,
+        types: searchOptions?.types,
+        components: searchOptions?.components,
+        strictbounds: searchOptions?.strictbounds,
+        region: searchOptions?.region,
       );
 
       if (res.errorMessage?.isNotEmpty ??
@@ -51,9 +51,10 @@ class GoogleMapService {
       onSuccess?.call(res.predictions);
       return res.predictions;
     } catch (e) {
+      print(e);
       onLoading?.call(false);
-      onError?.call(e);
-      return Future.error(e);
+      onError?.call('$e');
+      return Future.error('$e');
     }
   }
 
@@ -79,8 +80,8 @@ class GoogleMapService {
       return res.result;
     } catch (e) {
       onLoading?.call(false);
-      onError?.call(e);
-      return Future.error(e);
+      onError?.call('$e');
+      return Future.error('$e');
     }
   }
 
