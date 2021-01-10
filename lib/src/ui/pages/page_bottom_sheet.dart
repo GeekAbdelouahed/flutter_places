@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 
-import '../../models/search_options.dart';
 import '../../models/place.dart';
+import '../../models/search_options.dart';
 import '../../services/google_maps_service.dart';
 import '../../utils/extensions.dart';
 import '../components/logo_widget.dart';
@@ -68,6 +68,8 @@ class _PageBottomSheetState extends State<PageBottomSheet> {
   bool _isLoadingDetails = false;
 
   void _getPlaceDetails(Prediction prediction) {
+    if (_isLoadingDetails) return;
+
     _googleMapService.getPlaceDetails(
       prediction.placeId,
       onLoading: (isLoading) {

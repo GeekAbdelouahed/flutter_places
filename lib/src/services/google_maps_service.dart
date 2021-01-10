@@ -2,7 +2,6 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 
 import '../models/search_options.dart';
-import '../utils/constants.dart';
 
 class GoogleMapService {
   GoogleMapsPlaces _places;
@@ -14,9 +13,7 @@ class GoogleMapService {
   }) {
     _places = GoogleMapsPlaces(
       apiKey: apiKey,
-      baseUrl: AppConstants.isWeb()
-          ? 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api'
-          : null,
+      baseUrl: baseUrl,
       httpClient: httpClient,
     );
   }
