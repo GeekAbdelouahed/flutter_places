@@ -1,6 +1,6 @@
-## [1.0.0+3]
+## [1.0.0+4]
 
-* Support web version.
+* Improvements.
 ## [1.0.0+2]
 
 * Fix search options.
